@@ -149,7 +149,7 @@ def running():
 if __name__ == "__main__":
     running()
     what = raw_input("\ngo again? (y) ")
-    if what == y:
+    if what == "y":
         running()
 
 
