@@ -9,14 +9,35 @@ import json
 import time
 import re
 
+import tweepy
+
 from random import randint
+from random import choice
 from urllib2 import urlopen
+
+import ConfigParser
 
 #Traditional haiku consist of 17 on (also known as morae though often loosely translated as "syllables"), 
 #in three phrases of 5, 7, and 5 on, respectively.[3]
 #An alternative form of haiku consists of 11 on in three phrases of 3, 5, and 3 on, respectively.
 
+def tweepyauth():
+    
+    Config = ConfigParser.ConfigParser()
 
+    Config.readfp(open('auth.ini'))
+
+    consumer_key = Config.get("KEYS","CONSUMER_KEY")
+    consumer_secret = Config.get("KEYS","CONSUMER_SECRET")
+    access_token = Config.get("KEYS","ACCESS_TOKEN")
+    access_token_secret = Config.get("KEYS","ACCESS_SECRET")
+
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+
+    api = tweepy.API(auth)
+
+    return api
 
 
 # Findlay's script
@@ -46,23 +67,28 @@ def syllablecount(word):
 
 def running():
 
-    board = "r9k"
+    api = tweepyauth()
+
+    boards = ["/r9k/", "/k/", "/a/", "/vg/", "/lit/", "/fit/", "/biz/", "/b/", "/pol/", "/x/"]
+
+    board = choice(boards)
     words = []
 
     try:
-        url = "https://a.4cdn.org/" + board + "/catalog.json"
+        url = "https://a.4cdn.org" + board + "catalog.json"
         site = urlopen(url)
         site = site.read()
     except IOError:
         # open file
         print "you done goofed"
+        return "you done goofed"
 
     thestuff = json.loads(site)
 
     threadIDs = []
 
     for thread in thestuff[0]["threads"]:
-        if thread["replies"] > 100:
+        if thread["replies"] > 10:
             threadIDs.append(thread["no"])
 
     id = randint(0, len(threadIDs)-1)
@@ -80,15 +106,6 @@ def running():
 	            pass
         except KeyError:
             pass
-
-
-    
-
-
-# sys.flush
-
-
-
 
 #words = ["hello"]
     buildingblocks = {}
@@ -145,9 +162,16 @@ def running():
     print line2
     print line3
 
+    api.update_status(board + "\n" + line1 + "\n" + line2 + "\n" + line3)
+
     
 if __name__ == "__main__":
     running()
+
+    while True:
+        time.sleep(10800)
+        running()
+
     what = raw_input("\ngo again? (y) ")
     if what == "y":
         running()
