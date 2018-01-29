@@ -133,31 +133,41 @@ def running():
 
     while count != 0:
         syl = randint(1, count)
-        array = buildingblocks[syl]
-        word = array[randint(0, len(array)-1)]
-        line1 = line1 + " " + word 
-        count = count - syl
+        try:
+            array = buildingblocks[syl]
+            word = array[randint(0, len(array)-1)]
+            line1 = line1 + " " + word 
+            count = count - syl
+        except KeyError:
+            continue
 
     count = 7
     line2 = ""
 
     while count != 0:
         syl = randint(1, count)
-        array = buildingblocks[syl]
-        word = array[randint(0, len(array)-1)]
-        line2 = line2 + " " + word 
-        count = count - syl
+        try:
+            array = buildingblocks[syl]
+            word = array[randint(0, len(array)-1)]
+            line2 = line2 + " " + word 
+            count = count - syl
+        except KeyError:
+            continue
 
     count = 5
     line3 = ""
 
     while count != 0:
         syl = randint(1, count)
-        array = buildingblocks[syl]
-        word = array[randint(0, len(array)-1)]
-        line3 = line3 + " " + word 
-        count = count - syl
+        try:
+            array = buildingblocks[syl]
+            word = array[randint(0, len(array)-1)]
+            line3 = line3 + " " + word 
+            count = count - syl
+        except KeyError:
+            continue 
 
+        
     print line1
     print line2
     print line3
