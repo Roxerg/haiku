@@ -167,7 +167,7 @@ def running():
         except KeyError:
             continue 
 
-        
+
     print line1
     print line2
     print line3
@@ -179,7 +179,7 @@ if __name__ == "__main__":
     running()
 
     while True:
-        time.sleep(10800)
+        time.sleep(3600)
         running()
 
     what = raw_input("\ngo again? (y) ")
