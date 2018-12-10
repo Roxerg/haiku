@@ -69,7 +69,7 @@ def running():
 
     api = tweepyauth()
 
-    boards = ["/r9k/", "/k/", "/a/", "/vg/", "/lit/", "/fit/", "/biz/", "/b/", "/pol/", "/x/"]
+    boards = ["/r9k/", "/k/", "/a/", "/vg/", "/lit/", "/fit/", "/biz/", "/b/", "/pol/", "/x/", "/vr/", "/tg/", "/tv/", "/mlp/"]
 
     board = choice(boards)
     words = []
